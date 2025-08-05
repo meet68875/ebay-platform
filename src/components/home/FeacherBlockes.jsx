@@ -1,13 +1,21 @@
 import React from "react";
 import { FaHeart } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
-// A component to display a single watch card
 function TrendingWatchCard({ watch }) {
-  // Generate a random number of watchers
+  const navigate = useNavigate();
+
   const watchers = Math.floor(Math.random() * 200) + 10;
 
+  const handleCardClick = () => {
+    navigate("/products");
+  };
+
   return (
-    <div className="group relative rounded-lg overflow-hidden shadow-lg cursor-pointer h-96 bg-white transition-transform duration-300 hover:scale-105">
+    <div
+      onClick={handleCardClick}
+      className="group relative rounded-lg overflow-hidden shadow-lg cursor-pointer h-96 bg-white transition-transform duration-300 hover:scale-105 w-full max-w-sm sm:max-w-none"
+    >
       {/* Product Image */}
       <div className="relative h-2/3 overflow-hidden">
         <img
@@ -31,7 +39,13 @@ function TrendingWatchCard({ watch }) {
             <FaHeart className="text-red-500 text-sm" />
             <span className="text-xs">{watchers} watchers</span>
           </div>
-          <button className="text-blue-600 hover:text-blue-800 text-sm font-medium">
+          <button
+            onClick={(e) => {
+              e.stopPropagation(); // Prevent button click from triggering the whole card navigation
+              // Handle watchlist logic here if needed
+            }}
+            className="text-blue-600 hover:text-blue-800 text-sm font-medium"
+          >
             Add to watchlist
           </button>
         </div>
@@ -39,6 +53,7 @@ function TrendingWatchCard({ watch }) {
     </div>
   );
 }
+
 
 function TrendingWatchesSection() {
   const trendingWatches = [
@@ -74,8 +89,7 @@ function TrendingWatchesSection() {
 
   return (
     <section className="bg-gray-100 py-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
+     <div className="w-full max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-left mb-8">
           <h2 className="text-3xl font-bold text-gray-900">
             Trending in Watches
@@ -85,7 +99,6 @@ function TrendingWatchesSection() {
           </p>
         </div>
 
-        {/* Trending Watches Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {trendingWatches.map((watch) => (
             <TrendingWatchCard key={watch.id} watch={watch} />

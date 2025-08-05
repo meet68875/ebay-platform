@@ -110,7 +110,7 @@ function Header() {
         {/* Logo */}
         <Link to={"/"} className="flex-shrink-0 z-20">
           <h1 className="text-3xl lg:text-4xl font-extrabold text-blue-600 dark:text-blue-400">
-            React<span className="text-red-500 dark:text-red-400">Shop</span>
+            E<span className="text-red-500 dark:text-red-400">Bay</span>
           </h1>
         </Link>
 

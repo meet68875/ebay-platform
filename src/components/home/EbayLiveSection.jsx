@@ -89,7 +89,7 @@ function EbayLiveSection() {
 
   return (
     <section className="bg-white py-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="w-full max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-left mb-8">
           <h2 className="text-3xl font-bold text-gray-900">eBay Live</h2>
           <p className="mt-2 text-lg text-gray-500">

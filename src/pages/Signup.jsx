@@ -80,7 +80,7 @@ function Signup() {
               Create Account
             </h1>
             <p className="text-gray-600 dark:text-gray-300 text-lg">
-              Join React Shop today!
+              Join Ebay today!
             </p>
           </div>
 
