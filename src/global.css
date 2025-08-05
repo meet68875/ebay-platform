@@ -1,0 +1,82 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer components {
+  .wrapper {
+    @apply m-auto max-w-[1480px] min-h-[calc(100vh-162px)] py-3 lg:px-14 md:px-14 px-4;
+  }
+
+  .wrapper-full {
+    @apply w-full min-h-[calc(100vh-162px)] py-3 lg:px-14 md:px-14 px-4;
+  }
+
+  .lable {
+    /* Adjusted to new color scheme */
+    @apply bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 inline-block border border-gray-300 dark:border-gray-600 py-2 px-3 font-semibold text-xs rounded-full my-4;
+  }
+
+  /* No longer needed with the direct Tailwind classes in Login/Signup
+     Keeping them here only if you still use 'form-section' elsewhere */
+  .form-section {
+    @apply flex flex-col my-2 md:max-w-72 w-full lg:max-w-[498px] m-auto;
+  }
+
+  .form-section label {
+    @apply text-lg font-semibold;
+  }
+
+  .form-section input {
+    @apply text-base p-2 md:p-3 lg:p-4 md:max-w-80 w-full lg:max-w-[498px] outline-none text-gray-900 rounded-xl border border-gray-300 focus:ring-ebay-blue focus:border-ebay-blue dark:bg-ebay-dark-card dark:border-gray-600 dark:text-ebay-dark-text dark:focus:ring-ebay-blue dark:focus:border-ebay-blue;
+  }
+
+  .form-section span {
+    /* Specific styling for Formik validation errors */
+    @apply text-ebay-red h-6;
+  }
+
+  .form-section button {
+    /* Primary button (e.g., submit) */
+    @apply px-6 py-3 bg-ebay-blue text-white my-2 text-center rounded-lg w-full max-w-80 hover:bg-blue-700 transition-colors duration-200;
+  }
+
+  .form-section a {
+    /* Secondary link button (e.g., "Login" or "Sign Up") */
+    @apply px-6 py-3 bg-gray-200 text-gray-800 my-2 text-center rounded-lg w-full max-w-80 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600 transition-colors duration-200;
+  }
+
+  .bad {
+    /* For specific "badges" or tags */
+    @apply bg-white dark:bg-ebay-dark-card border border-gray-200 p-1 rounded-md;
+  }
+
+  .list {
+    @apply flex items-center justify-center cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg py-2;
+  }
+
+  .button {
+    /* Generic button class, can be reused */
+    @apply text-center text-lg rounded-lg text-white bg-ebay-blue hover:bg-blue-700 transition-colors duration-200;
+  }
+
+  .btn,
+  .btn-sm {
+    @apply font-medium inline-flex items-center justify-center border border-transparent rounded leading-snug transition duration-150 ease-in-out;
+  }
+
+  .btn {
+    @apply px-8 py-3 shadow-lg;
+  }
+
+  .btn-sm {
+    @apply px-4 py-2 shadow;
+  }
+
+  /* animation classes */
+  [data-aos="zoom-y-out"] {
+    transform: scaleX(1.03);
+    opacity: 0;
+    transition-property: transform, opacity;
+  }
+}
