@@ -1,40 +1,52 @@
 // src/constants/axiosInstance.js
+import axios from "axios";
+import storage from "../utils/helpers/localStorageHelper";
 
-import axios from 'axios';
-import storage from '../utils/helpers/localStorageHelper'; // updated usage
+const NODE_URL = import.meta.env.VITE_NODE_URL || "http://localhost:5000/api";
+const PUBLIC_API_URL =
+  import.meta.env.VITE_PUBLIC_API_URL || "https://api.escuelajs.co/api/v1";
 
+// Default API instance (public API)
 const axiosInstance = axios.create({
-  baseURL: 'https://api.escuelajs.co/api/v1',
-  headers: {
-    'Content-Type': 'application/json',
-  },
+  baseURL: PUBLIC_API_URL,
+  headers: { "Content-Type": "application/json" },
 });
 
-// Request interceptor: attach token
-axiosInstance.interceptors.request.use(
-  (config) => {
-    const token = storage.getItem('authToken');
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-    return config;
-  },
-  (error) => Promise.reject(error)
-);
+// Auth API instance (Node backend)
+export const authApi = axios.create({
+  baseURL: NODE_URL,
+  headers: { "Content-Type": "application/json" },
+});
 
-// Response interceptor: handle unauthorized access
-axiosInstance.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    if (error.response?.status === 401) {
-      storage.removeItem('authToken');
-      storage.removeItem('user');
-      console.error("Unauthorized: Token might be invalid or expired.");
-      // Optionally redirect to login
-      // window.location.href = '/login';
+// Attach token to both instances
+const attachTokenInterceptor = (instance) => {
+  instance.interceptors.request.use(
+    (config) => {
+      const token = storage.getItem("authToken");
+      console.log("token", token);
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+      return config;
+    },
+    (error) => Promise.reject(error)
+  );
+
+  instance.interceptors.response.use(
+    (response) => response,
+    (error) => {
+      if (error.response?.status === 401) {
+        storage.removeItem("authToken");
+        storage.removeItem("user");
+
+        console.error("Unauthorized: Token invalid or expired.");
+      }
+      return Promise.reject(error);
     }
-    return Promise.reject(error);
-  }
-);
+  );
+};
+
+attachTokenInterceptor(axiosInstance);
+attachTokenInterceptor(authApi);
 
 export default axiosInstance;

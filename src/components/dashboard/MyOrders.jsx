@@ -1,9 +1,28 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { FaMapMarkerAlt, FaCreditCard, FaRegClock, FaDollarSign } from 'react-icons/fa';
+import { fetchUserOrders } from '../../features/orderSlice';
 
 const MyOrdersPage = () => {
-  const { orders } = useSelector((state) => state.order);
+  const dispatch = useDispatch();
+
+  const { orders, orderLoading, orderError } = useSelector((state) => state.order);
+
+  useEffect(() => {
+    dispatch(fetchUserOrders());
+  }, [dispatch]);
+
+  if (orderLoading) {
+    return (
+      <div className="text-center p-6 text-gray-500 dark:text-gray-300">Loading your orders...</div>
+    );
+  }
+
+  if (orderError) {
+    return (
+      <div className="text-center p-6 text-red-600 dark:text-red-400">Error: {orderError}</div>
+    );
+  }
 
   if (!orders || orders.length === 0) {
     return (
@@ -13,40 +32,39 @@ const MyOrdersPage = () => {
     );
   }
 
-  // Calculate the total number of orders
   const orderCount = orders.length;
 
   return (
-    <div className="flex flex-col h-full max-h-[calc(100vh-150px)] overflow-y-auto pr-1 custom-scrollbar">
-      <div className="flex justify-between items-center mb-6 border-b-2 border-gray-300 dark:border-gray-700 pb-2">
-        <h1 className="text-3xl font-extrabold text-ebay-blue dark:text-white">
-          Your Orders
-        </h1>
+    <div className="flex flex-col h-full max-h-[calc(100vh-150px)]">
+      {/* Header: Fixed */}
+      <div className="flex justify-between items-center mb-6 border-b-2 border-gray-300 dark:border-gray-700 pb-2 flex-shrink-0 px-4">
+        <h1 className="text-3xl font-extrabold text-ebay-blue dark:text-white">Your Orders</h1>
         <div className="bg-ebay-blue dark:bg-green-600 text-white font-bold py-2 px-4 rounded-full shadow-lg">
           <span className="text-sm">Total Orders: </span>
           <span className="text-xl">{orderCount}</span>
         </div>
       </div>
 
-      <div className="space-y-8">
+      {/* Scrollable Orders List */}
+      <div className="flex-grow overflow-y-auto pr-1 custom-scrollbar space-y-8 px-4">
         {orders.map((order, index) => (
           <div
-            key={index}
+            key={order.id || index}
             className="bg-white dark:bg-grayshade-400 rounded-xl p-6 shadow-xl space-y-6"
           >
             <h2 className="text-xl font-bold text-gray-900 dark:text-white">
-              Order ID: <span className="text-ebay-blue">{order.id || `#${index + 1}`}</span>
+              Order ID: <span className="text-ebay-blue">{order.orderId || `#${index + 1}`}</span>
             </h2>
 
             {/* Scrollable items list */}
             <div className="max-h-80 overflow-y-auto pr-2 space-y-4 custom-scrollbar">
-              {order.items.map((item) => (
+              {order.items.map((item, idx) => (
                 <div
-                  key={item.id}
+                  key={idx}
                   className="flex justify-between items-center bg-lightColor-200 dark:bg-grayshade-500 rounded-lg px-4 py-3"
                 >
                   <div>
-                    <p className="font-semibold text-base text-gray-900 dark:text-white">{item.title}</p>
+                    <p className="font-semibold text-base text-gray-900 dark:text-white">{item.name}</p>
                     <p className="text-sm text-gray-600 dark:text-gray-300">Qty: {item.quantity}</p>
                   </div>
                   <div className="text-right">
@@ -76,12 +94,8 @@ const MyOrdersPage = () => {
                   <h3>Shipping Address</h3>
                 </div>
                 <div className="text-sm text-gray-700 dark:text-gray-300">
-                  <p>{order.shippingAddress.street}</p>
-                  <p>
-                    {order.shippingAddress.city}, {order.shippingAddress.state}{' '}
-                    {order.shippingAddress.zipCode}
-                  </p>
-                  <p>{order.shippingAddress.country}</p>
+                  {/* Assuming `order.address` is a single formatted string */}
+                  <p>{order.address}</p>
                 </div>
               </div>
 
@@ -98,7 +112,7 @@ const MyOrdersPage = () => {
                   </p>
                   <p className="flex items-center">
                     <FaRegClock className="mr-2" />
-                    Placed On: {new Date(order.date || order.placedAt).toLocaleString()}
+                    Placed On: {new Date(order.createdAt).toLocaleString()}
                   </p>
                 </div>
               </div>

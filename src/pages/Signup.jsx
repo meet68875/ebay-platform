@@ -31,7 +31,7 @@ function Signup() {
     validate, // Ensure your validator is updated to exclude lastName
     onSubmit: async (values) => {
       const payload = {
-        name: values.firstName, // Use firstName as the name, since lastName is removed
+        username: values.firstName, // Use firstName as the name, since lastName is removed
         email: values.email,
         password: values.password,
       };

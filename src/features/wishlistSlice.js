@@ -35,7 +35,7 @@ const initialState = {
 
 const updateTotalQuantity = (state) => {
   state.totalQuantity = state.items.length;
-};
+};  
 
 const wishlistSlice = createSlice({
   name: "wishlist",

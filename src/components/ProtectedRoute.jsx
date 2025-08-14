@@ -16,7 +16,12 @@ function ProtectedRoute({ children }) {
       dispatch(fetchUserProfile());
     }
   }, [dispatch, isAuthenticated, loading, token]);
-
+  console.log(
+    "isAuthenticated, loading, token ",
+    isAuthenticated,
+    loading,
+    token
+  );
   if (loading) {
     return (
       <div className="flex items-center justify-center h-screen">
