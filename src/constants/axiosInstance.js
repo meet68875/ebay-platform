@@ -11,7 +11,6 @@ const PUBLIC_API_URL =
 const axiosInstance = axios.create({
   baseURL: PUBLIC_API_URL,
   headers: { "Content-Type": "application/json" },
-  withCredentials: true, // ✅ Ensure cookies are sent
 });
 
 // Auth API instance (Node backend)
