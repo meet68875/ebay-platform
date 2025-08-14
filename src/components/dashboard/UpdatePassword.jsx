@@ -2,7 +2,7 @@ import React from "react";
 import { updatePassword as validate } from "../../utils/helpers/formValidator";
 import { useFormik } from "formik";
 import toast from "react-hot-toast";
-import axiosInstance from "../../constants/axiosInstance";
+import axiosInstance, { authApi } from "../../constants/axiosInstance";
 
 function UpdatePassword() {
   const formik = useFormik({
@@ -11,33 +11,34 @@ function UpdatePassword() {
       newPassword: "",
     },
     validate,
-    onSubmit: (values) => {
+
+    onSubmit: async (values) => {
       if (values.newPassword === values.currentPassword) {
         toast.error("New password can't be the same as current password", {
           duration: 3000,
         });
         return;
       }
-      const updatedInfo = JSON.stringify(values);
-      axiosInstance
-        .post("/user/update/password", updatedInfo, {
+
+      try {
+        const response = await authApi.put("/users/change-password", values, {
           headers: {
             "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*",
+            // Optional: Add token manually if axiosInstance doesn't include it
+            // Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
-        })
-        .then((res) => {
-          if (res.status === 204)
-            toast.success("Password Changed successfully!", { duration: 3000 });
-        })
-        .catch((err) => {
-          console.log(err);
-          if (err.response.status === 404 || err.response.status === 401) {
-            toast.error(err.response.data, { duration: 3000 });
-          }
         });
+
+        toast.success("Password changed successfully!", { duration: 3000 });
+        formik.resetForm();
+      } catch (err) {
+        const message =
+          err?.response?.data?.message || "Failed to update password";
+        toast.error(message, { duration: 3000 });
+      }
     },
   });
+
   return (
     <form onSubmit={formik.handleSubmit} className="w-full">
       <h1 className="text-2xl my-12 font-bold text-center xl:text-left">Update Your Password</h1>
@@ -58,6 +59,7 @@ function UpdatePassword() {
             : null}
         </span>
       </div>
+
       <div className="form-section">
         <label htmlFor="newPassword">New Password</label>
         <input
@@ -74,6 +76,7 @@ function UpdatePassword() {
             : null}
         </span>
       </div>
+
       <div className="form-section items-center md:col-span-2">
         <button type="submit">Change Password</button>
       </div>

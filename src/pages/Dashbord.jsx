@@ -9,8 +9,7 @@ function Dashboard() {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
 
-  const firstName = user?.firstName || user?.name?.split(" ")[0] || "";
-  const lastName = user?.lastName || user?.name?.split(" ").slice(1).join(" ") || "";
+  const firstName = user?.firstName || user?.username?.split(" ")[0] || "";
 
   const handleLogout = () => dispatch(logout());
 
@@ -60,7 +59,7 @@ function Dashboard() {
         <h1 className="text-xl xl:text-2xl font-bold text-zinc-800 dark:text-white">
           Hello{" "}
           <span className="text-purpleshade-400">
-            {firstName} {lastName}
+            {firstName}
           </span>
         </h1>
 

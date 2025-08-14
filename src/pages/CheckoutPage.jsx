@@ -6,7 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
 import { clearCart } from "../features/cartSlice";
-import { addOrder } from "../features/orderSlice";
+import { placeOrderToAPI } from "../features/orderSlice";
 
 function OrderSummaryPage() {
   const dispatch = useDispatch();
@@ -52,35 +52,39 @@ function OrderSummaryPage() {
   };
 
   const handlePlaceOrder = () => {
-    if (cartItems.length === 0) {
-      toast.error("Your cart is empty!");
-      return;
-    }
+  if (cartItems.length === 0) {
+    toast.error("Your cart is empty!");
+    return;
+  }
 
-    if (!validateAddress()) {
-      toast.error("Please fill in all shipping address fields.");
-      return;
-    }
+  if (!validateAddress()) {
+    toast.error("Please fill in all shipping address fields.");
+    return;
+  }
 
-    const orderData = {
-      items: cartItems,
-      totalAmount,
-      totalQuantity,
-      shippingAddress,
-      paymentMethod,
-      placedAt: new Date().toISOString(), // Optional: for timestamp
-    };
-
-    // Assuming addOrder is a thunk that handles the API call
-    dispatch(addOrder(orderData));
-    
-    // The navigation and toast should only happen on a successful order
-    // In a real app, this logic would be inside an useEffect that watches for `orderSuccess`
-    // For this example, we'll keep it here for simplicity
-    dispatch(clearCart());
-    toast.success("Order placed successfully!");
-    navigate("/dashboard/my-orders");
+  // Transform cartItems to match backend schema
+  const items = cartItems.map((item) => ({
+    productId: String(item.id),         // Convert to string
+    name: item.title,                   // Rename title -> name
+    price: item.price,
+    quantity: item.quantity,
+  }));
+  console.log("shippingAddress",shippingAddress)
+  const orderData = {
+    items,
+    totalAmount,
+    address: `${shippingAddress.street}, ${shippingAddress.city}, ${shippingAddress.state}, ${shippingAddress.zipCode}, ${shippingAddress.country}`,
+    paymentMethod,
   };
+
+  console.log("✅ Final orderData to send:", orderData);
+
+  dispatch(placeOrderToAPI(orderData));
+  dispatch(clearCart());
+  toast.success("Order placed successfully!");
+  navigate("/dashboard/my-orders");
+};
+
 
   return (
     <div className="wrapper py-10 px-5 max-w-7xl mx-auto min-h-[calc(100vh-8rem)]">

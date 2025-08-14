@@ -1,22 +1,57 @@
 // src/features/orderSlice.js
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { authApi } from "../constants/axiosInstance";
 
-// A constant for the local storage key is a good practice
-const LOCAL_STORAGE_KEY = "orders";
+// --- Thunks ---
 
-// Helper function to safely get orders from local storage on initialization
-const getOrdersFromLocalStorage = () => {
-  try {
-    const orders = localStorage.getItem(LOCAL_STORAGE_KEY);
-    return orders ? JSON.parse(orders) : [];
-  } catch (error) {
-    console.error("Failed to load orders from local storage:", error);
-    return [];
+// 1. Place Order
+export const placeOrderToAPI = createAsyncThunk(
+  "orders/placeOrder",
+  async (orderData, { getState, rejectWithValue }) => {
+    try {
+      const token = getState().auth.token;
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      const { data } = await authApi.post("/orders", orderData, config);
+      return data.data; // Order created
+    } catch (error) {
+      return rejectWithValue(
+        error?.response?.data?.message || "Failed to place order"
+      );
+    }
   }
-};
+);
+
+// 2. Get All Orders for Logged-in User
+export const fetchUserOrders = createAsyncThunk(
+  "orders/fetchUserOrders",
+  async (_, { getState, rejectWithValue }) => {
+    try {
+      const token = getState().auth.token;
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      const { data } = await authApi.get("/orders", config);
+      return data.data; // Orders array
+    } catch (error) {
+      return rejectWithValue(
+        error?.response?.data?.message || "Failed to fetch orders"
+      );
+    }
+  }
+);
+
+// --- Slice ---
 
 const initialState = {
-  orders: getOrdersFromLocalStorage(),
+  orders: [],
   orderLoading: false,
   orderSuccess: false,
   orderError: null,
@@ -26,45 +61,49 @@ const orderSlice = createSlice({
   name: "order",
   initialState,
   reducers: {
-    // This is the new, common method to add an order to the state and local storage.
-    addOrder: (state, action) => {
-      // Create a unique ID and timestamp for the new order
-      const newOrder = {
-        ...action.payload,
-        id: "ORD-" + new Date().getTime(),
-        date: new Date().toISOString(),
-      };
-      
-      // Add the new order to the beginning of the orders array
-      state.orders.unshift(newOrder);
-
-      // Save the entire updated orders array back to local storage
-      try {
-        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(state.orders));
-        state.orderSuccess = true;
-        state.orderError = null;
-      } catch (error) {
-        console.error("Failed to save orders to local storage:", error);
-        state.orderError = "Failed to save order.";
-        state.orderSuccess = false;
-      }
-    },
-    
-    // A method to clear all orders from both state and local storage
     clearOrders: (state) => {
       state.orders = [];
-      localStorage.removeItem(LOCAL_STORAGE_KEY);
     },
-
-    // A utility to reset the status flags for a new operation
     resetOrderState: (state) => {
       state.orderLoading = false;
       state.orderSuccess = false;
       state.orderError = null;
     },
   },
+  extraReducers: (builder) => {
+    builder
+
+      // Place Order
+      .addCase(placeOrderToAPI.pending, (state) => {
+        state.orderLoading = true;
+        state.orderError = null;
+      })
+      .addCase(placeOrderToAPI.fulfilled, (state, action) => {
+        state.orderLoading = false;
+        state.orderSuccess = true;
+        state.orders.unshift(action.payload); // Add new order to list
+      })
+      .addCase(placeOrderToAPI.rejected, (state, action) => {
+        state.orderLoading = false;
+        state.orderError = action.payload;
+      })
+
+      // Fetch Orders
+      .addCase(fetchUserOrders.pending, (state) => {
+        state.orderLoading = true;
+        state.orderError = null;
+      })
+      .addCase(fetchUserOrders.fulfilled, (state, action) => {
+        state.orderLoading = false;
+        state.orders = action.payload;
+      })
+      .addCase(fetchUserOrders.rejected, (state, action) => {
+        state.orderLoading = false;
+        state.orderError = action.payload;
+      });
+  },
 });
 
-export const { addOrder, clearOrders, resetOrderState } = orderSlice.actions;
-
+// --- Exports ---
+export const { clearOrders, resetOrderState } = orderSlice.actions;
 export default orderSlice.reducer;
