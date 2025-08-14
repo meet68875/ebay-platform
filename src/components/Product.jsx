@@ -81,7 +81,7 @@ function Product({ productData }) {
       <div className="p-5 flex-grow flex flex-col justify-between">
         <div className="mb-4">
           <Link to={`/products/${id}`}>
-            <h3 className="font-semibold text-xl mb-2 text-gray-900 dark:text-white hover:text-purple-600">
+            <h3 className="font-semibold text-xl mb-2 text-gray-900 dark:text-white hover:text-blue-600">
               {title}
             </h3>
           </Link>

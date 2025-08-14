@@ -134,7 +134,7 @@ function CartPage() {
               </div>
               <div className="flex justify-between items-center border-t border-gray-300 dark:border-gray-600 pt-4">
                 <p className="text-xl font-bold">Total Amount:</p>
-                <p className="text-2xl font-extrabold text-purple-600 dark:text-purple-400">
+                <p className="text-2xl font-extrabold text-blue-600 dark:text-purple-400">
                   ${totalAmount.toLocaleString()}
                 </p>
               </div>

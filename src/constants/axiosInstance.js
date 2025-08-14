@@ -2,7 +2,7 @@
 import axios from "axios";
 import storage from "../utils/helpers/localStorageHelper";
 
-const NODE_URL = import.meta.env.VITE_NODE_URL || "http://localhost:5000/api";
+const NODE_URL = import.meta.env.VITE_NODE_URL || "https://ebay-backend-1-e7ev.onrender.com/api";
 const PUBLIC_API_URL =
   import.meta.env.VITE_PUBLIC_API_URL || "https://api.escuelajs.co/api/v1";
 
@@ -34,11 +34,14 @@ const attachTokenInterceptor = (instance) => {
 
   instance.interceptors.response.use(
     (response) => response,
-    (error) => {
+    async (error) => {
       if (error.response?.status === 401) {
         storage.removeItem("authToken");
         storage.removeItem("user");
+        const { default: store } = await import("../apis/store.js");
+        const { logout } = await import("../features/authSlice.js");
 
+        store.dispatch(logout());
         console.error("Unauthorized: Token invalid or expired.");
       }
       return Promise.reject(error);

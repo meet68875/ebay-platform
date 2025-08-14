@@ -190,7 +190,6 @@ function Signup() {
               )}
             </div>
 
-            {/* Sign Up Button */}
             <div>
               <button
                 type="submit"

@@ -76,7 +76,7 @@ export default function DetailPage() {
             <h1 className="text-3xl sm:text-4xl font-bold mb-2 text-gray-900 dark:text-white">
               {product.title}
             </h1>
-            <span className="inline-block px-3 py-1 rounded-full text-xs font-medium text-purple-600 bg-purple-100 dark:text-purple-300 dark:bg-purple-800">
+            <span className="inline-block px-3 py-1 rounded-full text-xs font-medium text-blue-600 bg-purple-100 dark:text-purple-300 dark:bg-purple-800">
               {product.category.name}
             </span>
             <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300 my-6">

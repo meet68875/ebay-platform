@@ -1,20 +1,31 @@
+// utils/helpers/formValidator.js
 const signUpValidator = (values) => {
   const errors = {};
 
-  if (!values.firstName) {
-    errors.firstName = "First Name is required";
+  // First Name validation
+  if (!values.firstName.trim()) {
+    errors.firstName = "First name is required";
+  } else if (values.firstName.length < 2) {
+    errors.firstName = "First name must be at least 2 characters long";
   }
 
+  // Email validation
   if (!values.email) {
     errors.email = "Email is required";
-  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email)) {
     errors.email = "Invalid email address";
   }
 
+  // Password validation
   if (!values.password) {
     errors.password = "Password is required";
-  } else if (values.password.length < 6) {
-    errors.password = "Password must be at least 6 characters";
+  } else if (
+    !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/.test(
+      values.password
+    )
+  ) {
+    errors.password =
+      "Password must be at least 8 characters, include uppercase, lowercase, number, and special character.";
   }
 
   return errors;

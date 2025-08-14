@@ -3,221 +3,240 @@ import { Link } from "react-router-dom";
 
 function Footer() {
   return (
-    <footer>
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 mt-20">
+    <footer className="bg-gray-100 dark:bg-gray-800 py-8">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
         {/* Top area: Blocks */}
-        <div className="grid sm:grid-cols-12 gap-8 py-8 md:py-12 border-t border-grayshade-50">
-          {/* 1st block */}
+        <div className="grid sm:grid-cols-12 gap-8 py-8 border-t border-gray-200 dark:border-gray-600">
+          {/* 1st block: Legal Links */}
           <div className="sm:col-span-12 lg:col-span-3">
-            
-            <div className="text-sm text-grayshade-400 dark:text-lightColor-100">
-              <Link
-                to="#"
-                className="text-grayshade-400 dark:text-lightColor-100 hover:text-grayshade-50 hover:underline transition duration-150 ease-in-out"
+            <div className="text-sm text-gray-500 dark:text-gray-300">
+              <a
+                href="https://pages.ebay.com/help/policies/user-agreement.html"
+                className="hover:underline"
+                target="_blank"
+                rel="noopener noreferrer"
               >
-                Terms
-              </Link>{" "}
+                User Agreement
+              </a>{" "}
               ·{" "}
-              <Link
-                to="#"
-                className="text-grayshade-400 dark:text-lightColor-100 hover:text-grayshade-50 hover:underline transition duration-150 ease-in-out"
+              <a
+                href="https://pages.ebay.com/help/policies/privacy-policy.html"
+                className="hover:underline"
+                target="_blank"
+                rel="noopener noreferrer"
               >
                 Privacy Policy
-              </Link>
+              </a>{" "}
+              ·{" "}
+              <a
+                href="https://pages.ebay.com/sitemap.html"
+                className="hover:underline"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Site Map
+              </a>
             </div>
           </div>
 
-          {/* 2nd block */}
+          {/* 2nd block: Categories */}
           <div className="sm:col-span-6 md:col-span-3 lg:col-span-2">
-            <h6 className="text-purpleshade-300 font-bold mb-2">Products</h6>
-            <ul className="text-sm">
+            <h6 className="text-blue-600 font-bold mb-2">Categories</h6>
+            <ul className="text-sm text-gray-500 dark:text-gray-300">
               <li className="mb-2">
-                <Link
-                  to="#"
-                  className="text-grayshade-400 dark:text-lightColor-100 hover:text-grayshade-50 transition duration-150 ease-in-out"
+                <a
+                  href="https://www.ebay.com/b/Electronics/bn_7000259124"
+                  className="hover:underline"
+                  target="_blank" rel="noopener noreferrer"
                 >
-                  Web Studio
-                </Link>
+                  Electronics
+                </a>
               </li>
               <li className="mb-2">
-                <Link
-                  to="#"
-                  className="text-grayshade-400 dark:text-lightColor-100 hover:text-grayshade-50 transition duration-150 ease-in-out"
+                <a
+                  href="https://www.ebay.com/b/Clothing-Shoes-Accessories/bn_7000259856"
+                  className="hover:underline"
+                  target="_blank" rel="noopener noreferrer"
                 >
-                  DynamicBox Flex
-                </Link>
+                  Fashion
+                </a>
               </li>
               <li className="mb-2">
-                <Link
-                  to="#"
-                  className="text-grayshade-400 dark:text-lightColor-100 hover:text-grayshade-50 transition duration-150 ease-in-out"
+                <a
+                  href="https://www.ebay.com/b/Collectibles-Art/bn_7000259852"
+                  className="hover:underline"
+                  target="_blank" rel="noopener noreferrer"
                 >
-                  Programming Forms
-                </Link>
+                  Collectibles & Art
+                </a>
               </li>
               <li className="mb-2">
-                <Link
-                  to="#"
-                  className="text-grayshade-400 dark:text-lightColor-100 hover:text-grayshade-50 transition duration-150 ease-in-out"
+                <a
+                  href="https://www.ebay.com/b/Home-Garden/bn_7000259853"
+                  className="hover:underline"
+                  target="_blank" rel="noopener noreferrer"
                 >
-                  Integrations
-                </Link>
+                  Home & Garden
+                </a>
               </li>
               <li className="mb-2">
-                <Link
-                  to="#"
-                  className="text-grayshade-400 dark:text-lightColor-100 hover:text-grayshade-50 transition duration-150 ease-in-out"
+                <a
+                  href="https://www.ebay.com/b/Motors/bn_7000259851"
+                  className="hover:underline"
+                  target="_blank" rel="noopener noreferrer"
                 >
-                  Command-line
-                </Link>
+                  Motors
+                </a>
               </li>
             </ul>
           </div>
 
-          {/* 3rd block */}
+          {/* 3rd block: My eBay */}
           <div className="sm:col-span-6 md:col-span-3 lg:col-span-2">
-            <h6 className="text-purpleshade-300 font-bold mb-2">Resources</h6>
-            <ul className="text-sm">
+            <h6 className="text-blue-600 font-bold mb-2">My eBay</h6>
+            <ul className="text-sm text-gray-500 dark:text-gray-300">
               <li className="mb-2">
-                <Link
-                  to="#"
-                  className="text-grayshade-400 dark:text-lightColor-100 hover:text-grayshade-50 transition duration-150 ease-in-out"
+                <a
+                  href="https://www.ebay.com/myb/Summary"
+                  className="hover:underline"
+                  target="_blank" rel="noopener noreferrer"
                 >
-                  Documentation
-                </Link>
+                  Summary
+                </a>
               </li>
               <li className="mb-2">
-                <Link
-                  to="#"
-                  className="text-grayshade-400 dark:text-lightColor-100 hover:text-grayshade-50 transition duration-150 ease-in-out"
+                <a
+                  href="https://www.ebay.com/myb/WatchList"
+                  className="hover:underline"
+                  target="_blank" rel="noopener noreferrer"
                 >
-                  Tutorials & Guides
-                </Link>
+                  Watchlist
+                </a>
               </li>
               <li className="mb-2">
-                <Link
-                  to="#"
-                  className="text-grayshade-400 dark:text-lightColor-100 hover:text-grayshade-50 transition duration-150 ease-in-out"
+                <a
+                  href="https://www.ebay.com/myb/PurchaseHistory"
+                  className="hover:underline"
+                  target="_blank" rel="noopener noreferrer"
                 >
-                  Blog
-                </Link>
+                  Purchase History
+                </a>
               </li>
               <li className="mb-2">
-                <Link
-                  to="#"
-                  className="text-grayshade-400 dark:text-lightColor-100 hover:text-grayshade-50 transition duration-150 ease-in-out"
+                <a
+                  href="https://www.ebay.com/b/Selling/bn_7117942457"
+                  className="hover:underline"
+                  target="_blank" rel="noopener noreferrer"
                 >
-                  Support Center
-                </Link>
+                  Selling
+                </a>
               </li>
               <li className="mb-2">
-                <Link
-                  to="#"
-                  className="text-grayshade-400 dark:text-lightColor-100 hover:text-grayshade-50 transition duration-150 ease-in-out"
+                <a
+                  href="https://www.ebay.com/help/account"
+                  className="hover:underline"
+                  target="_blank" rel="noopener noreferrer"
                 >
-                  Partners
-                </Link>
+                  Account Settings
+                </a>
               </li>
             </ul>
           </div>
 
-          {/* 4th block */}
+          {/* 4th block: Help & Community */}
           <div className="sm:col-span-6 md:col-span-3 lg:col-span-2">
-            <h6 className="text-purpleshade-300 font-bold mb-2">Company</h6>
-            <ul className="text-sm">
+            <h6 className="text-blue-600 font-bold mb-2">Help & Community</h6>
+            <ul className="text-sm text-gray-500 dark:text-gray-300">
               <li className="mb-2">
-                <Link
-                  to="#"
-                  className="text-grayshade-400 dark:text-lightColor-100 hover:text-grayshade-50 transition duration-150 ease-in-out"
+                <a
+                  href="https://www.ebay.com/help/home"
+                  className="hover:underline"
+                  target="_blank" rel="noopener noreferrer"
                 >
-                  Home
-                </Link>
+                  Help & Contact
+                </a>
               </li>
               <li className="mb-2">
-                <Link
-                  to="#"
-                  className="text-grayshade-400 dark:text-lightColor-100 hover:text-grayshade-50 transition duration-150 ease-in-out"
+                <a
+                  href="https://community.ebay.com/"
+                  className="hover:underline"
+                  target="_blank" rel="noopener noreferrer"
                 >
-                  About us
-                </Link>
+                  eBay Community
+                </a>
               </li>
               <li className="mb-2">
-                <Link
-                  to="#"
-                  className="text-grayshade-400 dark:text-lightColor-100 hover:text-grayshade-50 transition duration-150 ease-in-out"
+                <a
+                  href="https://www.ebayinc.com/stories/news/"
+                  className="hover:underline"
+                  target="_blank" rel="noopener noreferrer"
                 >
-                  Company values
-                </Link>
+                  News
+                </a>
               </li>
               <li className="mb-2">
-                <Link
-                  to="#"
-                  className="text-grayshade-400 dark:text-lightColor-100 hover:text-grayshade-50 transition duration-150 ease-in-out"
+                <a
+                  href="https://www.ebay.com/help/buying"
+                  className="hover:underline"
+                  target="_blank" rel="noopener noreferrer"
                 >
-                  Pricing
-                </Link>
+                  Buying Help
+                </a>
               </li>
               <li className="mb-2">
-                <Link
-                  to="#"
-                  className="text-grayshade-400 dark:text-lightColor-100 hover:text-grayshade-50 transition duration-150 ease-in-out"
+                <a
+                  href="https://www.ebay.com/help/selling"
+                  className="hover:underline"
+                  target="_blank" rel="noopener noreferrer"
                 >
-                  Privacy Policy
-                </Link>
+                  Selling Help
+                </a>
               </li>
             </ul>
           </div>
 
-          {/* 5th block */}
+          {/* 5th block: Subscribe */}
           <div className="sm:col-span-6 md:col-span-3 lg:col-span-3">
-            <h6 className="text-purpleshade-300 font-bold mb-2">Subscribe</h6>
-            <p className="text-sm text-grayshade-400 dark:text-lightColor-100 mb-4">
-              Get the latest news and articles to your inbox every month.
+            <h6 className="text-blue-600 font-bold mb-2">Subscribe</h6>
+            <p className="text-sm text-gray-500 dark:text-gray-300 mb-4">
+              Get the latest deals and updates from eBay.
             </p>
             <form>
               <div className="flex flex-wrap mb-4">
                 <div className="w-full">
-                  <label className="block text-sm sr-only" htmlFor="newsletter">
-                    Email
-                  </label>
+                  <label htmlFor="newsletter" className="sr-only">Email</label>
                   <div className="relative flex items-center max-w-xs">
                     <input
                       id="newsletter"
                       type="email"
-                      className="form-input w-full dark:bg-grayshade-500 p-4 focus:outline-none px-3 bold-2 pr-12 text-sm"
+                      className="form-input w-full p-4 pr-12 text-sm bg-gray-200 dark:bg-gray-700 focus:outline-none"
                       placeholder="Your email"
                       required
                     />
                     <button
                       type="submit"
-                      className="absolute inset-0 left-auto"
+                      className="absolute inset-y-0 right-0 px-4 flex items-center"
                       aria-label="Subscribe"
                     >
-                      <span
-                        className="absolute inset-0 right-auto w-px -ml-px my-2 bg-grayshade-50"
-                        aria-hidden="true"
-                      ></span>
                       <svg
-                        className="w-3 h-3 fill-current text-purpleshade-300 mx-3 flex-shrink-0"
+                        className="w-4 h-4 fill-current text-blue-600"
                         viewBox="0 0 12 12"
                         xmlns="http://www.w3.org/2000/svg"
                       >
-                        <path
-                          d="M11.707 5.293L7 .586 5.586 2l3 3H0v2h8.586l-3 3L7 11.414l4.707-4.707a1 1 0 000-1.414z"
-                          fillRule="nonzero"
-                        />
+                        <path d="M11.707 5.293L7 .586 5.586 2l3 3H0v2h8.586l-3 3L7 11.414l4.707-4.707a1 1 0 000-1.414z" fillRule="nonzero" />
                       </svg>
                     </button>
                   </div>
-                  {/* Success message */}
-                  {/* <p className="mt-2 text-green-600 text-sm">Thanks for subscribing!</p> */}
                 </div>
               </div>
             </form>
           </div>
         </div>
 
-      
+        {/* Bottom area: Copyright */}
+        <div className="text-center text-xs text-gray-400 dark:text-gray-500 mt-4">
+          &copy; 1995–2025 eBay Inc. All Rights Reserved.
+        </div>
       </div>
     </footer>
   );
